@@ -28,6 +28,10 @@
       <a href="index.html#blog">Blog</a>
       <a href="about.html">About</a>
       <span id="authArea" class="auth-cta"></span>
+      <span id="authArea">
+      <a class="btn btn-outline nojs-login" href="./auth.html">Login</a>
+      <a class="btn btn-primary nojs-cta" href="./auth.html#register">Get Started</a>
+     </span>
     </nav>
   </div>
 </header>
@@ -50,15 +54,54 @@
   </div>
 </footer>
 
-<script src="./app.js"></script>
+<script defer src="./app.js?v=3"></script>   <!-- bump v= number on each deploy -->
 <script>
   // Render account page on load
   window.addEventListener('DOMContentLoaded', () => {
     if (window.USAuth && document.getElementById('accountApp')) {
       USAuth.renderAccountPage();
       USAuth.renderAuthCta();
+      // Hide the plain fallback once JS takes over
+(function(){ 
+  const hideFallback = () => {
+    document.querySelectorAll('.nojs-login,.nojs-cta').forEach(el => el.remove());
+  };
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', hideFallback);
+  } else hideFallback();
+})();
+
     }
   });
 </script>
 </body>
 </html>
+<script>
+(function(){
+  function boot() {
+    const root = document.getElementById('accountApp');
+    if (!root) return;
+    if (window.USAuth?.renderAccountPage) {
+      USAuth.renderAccountPage();
+      USAuth.renderAuthCta?.();
+    } else {
+      setTimeout(() => {
+        if (window.USAuth?.renderAccountPage) {
+          USAuth.renderAccountPage();
+          USAuth.renderAuthCta?.();
+        } else {
+          root.innerHTML = `
+            <div class="glass card">
+              <p class="muted">We couldn’t load the account module. Please refresh (Ctrl/Cmd + F5).</p>
+              <a class="btn btn-primary" href="./auth.html">Reload</a>
+            </div>`;
+          console.error('USAuth not available – is app.js loaded?');
+        }
+      }, 120);
+    }
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else boot();
+})();
+</script>

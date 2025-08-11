@@ -32,7 +32,12 @@
       <a href="index.html#blog">Blog</a>
       <a href="about.html">About</a>
       <span id="authArea" class="auth-cta"></span>
-    </nav>
+      <!-- Fallback: visible without JS -->
+     <span id="authArea">
+      <a class="btn btn-outline nojs-login" href="./auth.html">Login</a>
+      <a class="btn btn-primary nojs-cta" href="./auth.html#register">Get Started</a>
+     </span>
+   </nav>
   </div>
   <div id="mobileNav" class="container nav" style="display:none"></div>
 </header>
@@ -315,7 +320,8 @@
 </footer>
 
 <!-- Load your core JS -->
-<script src="./app.js"></script>
+<script defer src="./app.js?v=3"></script>   <!-- bump v= number on each deploy -->
+
 
 <!-- Inject course images after app.js renders the cards (no edits to app.js needed) -->
 <script>
