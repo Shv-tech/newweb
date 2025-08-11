@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900">
+  <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF4ECD"></stop><stop offset=".5" stop-color="#A855F7"></stop><stop offset="1" stop-color="#7C3AED"></stop></linearGradient><filter id="n"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" stitchTiles="stitch"></feTurbulence><feColorMatrix type="saturate" values="0"></feColorMatrix><feComponentTransfer><feFuncA type="table" tableValues="0 .08"></feFuncA></feComponentTransfer></filter></defs>
+  <rect width="1600" height="900" fill="#0B0B12"></rect>
+  <circle cx="1220" cy="200" r="360" fill="url(#g)" opacity=".20"></circle><circle cx="380" cy="700" r="420" fill="url(#g)" opacity=".12"></circle>
+  <path d="M260 250c240 40 480 40 720 0" stroke="url(#g)" stroke-width="6" opacity=".4" fill="none"></path>
+  <path d="M260 320c240 40 480 40 720 0" stroke="url(#g)" stroke-width="4" opacity=".3" fill="none"></path>
+  <path d="M340 520c0-90 140-90 140 0s140 90 140 0 140-90 140 0" stroke="url(#g)" stroke-width="6" fill="none" opacity=".5"></path>
+  <text x="80" y="820" fill="#F4F4F7" font-family="Space Grotesk, Inter, sans-serif" font-size="64" font-weight="700">Poetry that Breathes</text>
+  <rect width="1600" height="900" filter="url(#n)" opacity=".18"></rect>
+</svg>

@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Account — Utopian Space</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body data-page="account">
+<a href="#main" class="skip">Skip to content</a>
+
+<header class="header">
+  <div class="container" style="display:flex;align-items:center;justify-content:space-between;gap:16px;height:64px">
+    <a href="index.html#home" class="brand" aria-label="Utopian Space Home">
+      <span class="brand-badge"><img src="./mainlogo.svg" alt="Utopian Space" class="brand-logo" /></span>
+      <span>Utopian Space</span>
+    </a>
+    <nav id="primaryNav" class="nav" aria-label="Primary">
+      <a href="index.html#academy">Academy</a>
+      <a href="index.html#publications">Publications</a>
+      <a href="index.html#label">Label</a>
+      <a href="index.html#esports">Esports</a>
+      <a href="index.html#animation">Animation</a>
+      <a href="index.html#recruitment">Recruitment</a>
+      <a href="index.html#events">Events</a>
+      <a href="index.html#blog">Blog</a>
+      <a href="about.html">About</a>
+      <span id="authArea" class="auth-cta"></span>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="container">
+  <h1 class="section-title" style="font-size:28px">Account</h1>
+  <div id="accountApp" class="grid grid-2"></div>
+</main>
+
+<footer class="container" style="margin-top:32px">
+  <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between">
+    <div>🪐 Utopian Space — <span class="muted">Legends are built.</span></div>
+    <nav aria-label="Footer links" style="display:flex;gap:12px;flex-wrap:wrap">
+      <a class="tag" href="terms.html">Terms</a>
+      <a class="tag" href="privacy.html">Privacy</a>
+      <a class="tag" href="contributors.html">Contributor Agreement</a>
+      <a class="tag" href="mailto:contact@theutopianspace.com">contact@theutopianspace.com</a>
+      <a class="tag" href="mailto:utopianspace01@gmail.com">utopianspace01@gmail.com</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="./app.js"></script>
+<script>
+  // Render account page on load
+  window.addEventListener('DOMContentLoaded', () => {
+    if (window.USAuth && document.getElementById('accountApp')) {
+      USAuth.renderAccountPage();
+      USAuth.renderAuthCta();
+    }
+  });
+</script>
+</body>
+</html>
