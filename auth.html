@@ -1,22 +1,32 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <link rel="icon" href="/favicon.ico">
+
+  <link rel="icon" href="/favicon.ico">
   <meta charset="utf-8" />
   <title>Account — Utopian Space</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Manage your Utopian Space profile, security, and library." />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./styles.css" />
+  <link rel="icon" href="./mainlogo.svg" type="image/svg+xml">
 </head>
-<body data-page="account">
+<body>
 <a href="#main" class="skip">Skip to content</a>
 
 <header class="header">
   <div class="container" style="display:flex;align-items:center;justify-content:space-between;gap:16px;height:64px">
     <a href="index.html#home" class="brand" aria-label="Utopian Space Home">
-      <span class="brand-badge"><img src="./mainlogo.svg" alt="Utopian Space" class="brand-logo" /></span>
+      <span class="brand-badge">
+        <img src="./mainlogo.svg" class="brand-logo-img" alt="" />
+      </span>
       <span>Utopian Space</span>
     </a>
+
+    <button id="menuBtn" class="btn btn-outline hamburger" aria-expanded="false" aria-controls="primaryNav" aria-label="Toggle navigation">Menu</button>
+
     <nav id="primaryNav" class="nav" aria-label="Primary">
       <a href="index.html#academy">Academy</a>
       <a href="index.html#publications">Publications</a>
@@ -27,21 +37,29 @@
       <a href="index.html#events">Events</a>
       <a href="index.html#blog">Blog</a>
       <a href="about.html">About</a>
+
+      <!-- JS fills this; keep only one -->
       <span id="authArea" class="auth-cta"></span>
-      <span id="authArea">
-      <a class="btn btn-outline nojs-login" href="./auth.html">Login</a>
-      <a class="btn btn-primary nojs-cta" href="./auth.html#register">Get Started</a>
-     </span>
+
+      <!-- No-JS fallback -->
+      <noscript>
+        <span class="auth-cta">
+          <a class="btn btn-outline" href="./auth.html">Login</a>
+          <a class="btn btn-primary" href="./auth.html#register">Get Started</a>
+        </span>
+      </noscript>
     </nav>
   </div>
+
+  <div id="mobileNav" class="container nav" style="display:none"></div>
 </header>
 
 <main id="main" class="container">
-  <h1 class="section-title" style="font-size:28px">Account</h1>
-  <div id="accountApp" class="grid grid-2"></div>
+  <h1 class="section-title">Account</h1>
+  <div id="accountApp"></div>
 </main>
 
-<footer class="container" style="margin-top:32px">
+<footer class="container">
   <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between">
     <div>🪐 Utopian Space — <span class="muted">Legends are built.</span></div>
     <nav aria-label="Footer links" style="display:flex;gap:12px;flex-wrap:wrap">
@@ -50,58 +68,31 @@
       <a class="tag" href="contributors.html">Contributor Agreement</a>
       <a class="tag" href="mailto:contact@theutopianspace.com">contact@theutopianspace.com</a>
       <a class="tag" href="mailto:utopianspace01@gmail.com">utopianspace01@gmail.com</a>
+      <a class="tag" href="https://www.linkedin.com/company/utopian-space/" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="tag" href="https://www.linkedin.com/company/utopian-space-publications/" target="_blank" rel="noopener">Publications</a>
+      <a class="tag" href="https://t.me/utopianSpace1" target="_blank" rel="noopener">Telegram</a>
+      <a class="tag" href="https://youtube.com/@utopianspace?si=btgXNbpGKGCA1AFy" target="_blank" rel="noopener">YouTube</a>
+      <a class="tag" href="https://www.instagram.com/utopian_space01/" target="_blank" rel="noopener">Instagram</a>
     </nav>
   </div>
 </footer>
 
-<script defer src="./app.js?v=3"></script>   <!-- bump v= number on each deploy -->
+<!-- One script only; bump v= when you redeploy to bust cache -->
+<script defer src="./app.js?v=11"></script>
 <script>
-  // Render account page on load
-  window.addEventListener('DOMContentLoaded', () => {
-    if (window.USAuth && document.getElementById('accountApp')) {
+  // Nudge the module to render on this page
+  window.addEventListener('DOMContentLoaded', function () {
+    if (window.USAuth && typeof USAuth.renderAccountPage === 'function') {
       USAuth.renderAccountPage();
-      USAuth.renderAuthCta();
-      // Hide the plain fallback once JS takes over
-(function(){ 
-  const hideFallback = () => {
-    document.querySelectorAll('.nojs-login,.nojs-cta').forEach(el => el.remove());
-  };
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', hideFallback);
-  } else hideFallback();
-})();
-
+      USAuth.renderAuthCta?.();
+    } else {
+      var root = document.getElementById('accountApp');
+      if (root) {
+        root.innerHTML = '<div class="glass card"><p class="muted">We couldn\\"to load the account module. Please refresh once (Ctrl/Cmd + F5).</p><a class="btn btn-primary" href="./auth.html">Reload</a></div>';
+        console.warn('USAuth not available – is app.js loaded?');
+      }
     }
   });
 </script>
 </body>
 </html>
-<script>
-(function(){
-  function boot() {
-    const root = document.getElementById('accountApp');
-    if (!root) return;
-    if (window.USAuth?.renderAccountPage) {
-      USAuth.renderAccountPage();
-      USAuth.renderAuthCta?.();
-    } else {
-      setTimeout(() => {
-        if (window.USAuth?.renderAccountPage) {
-          USAuth.renderAccountPage();
-          USAuth.renderAuthCta?.();
-        } else {
-          root.innerHTML = `
-            <div class="glass card">
-              <p class="muted">We couldn’t load the account module. Please refresh (Ctrl/Cmd + F5).</p>
-              <a class="btn btn-primary" href="./auth.html">Reload</a>
-            </div>`;
-          console.error('USAuth not available – is app.js loaded?');
-        }
-      }, 120);
-    }
-  }
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', boot);
-  } else boot();
-})();
-</script>
